@@ -2,12 +2,12 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Install dependencies first for better layer caching
+# Copy everything needed to build the package
 COPY pyproject.toml .
-RUN pip install --no-cache-dir ".[dev]" || pip install --no-cache-dir .
-
-# Copy source
 COPY src/ src/
+
+# Install the package and dependencies
+RUN pip install --no-cache-dir ".[dev]" || pip install --no-cache-dir .
 
 EXPOSE 8002
 
